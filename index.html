@@ -1,0 +1,656 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ホップ栽培 × ノンアル醸造ノート（草深/印西）</title>
+  <meta name="description" content="印西市草深の家庭環境でのホップ栽培と、ノンアル（発酵させない/1%未満）ビール風飲料の作り方まとめ。" />
+  <style>
+    :root{
+      --bg:#0b0f14; --card:#111826; --text:#e6edf3; --muted:#9fb0c0;
+      --accent:#4cc9f0; --accent2:#a3e635; --warn:#fbbf24; --danger:#fb7185;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 14px; --max: 1120px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Hiragino Sans", "Noto Sans JP", "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: radial-gradient(1200px 700px at 20% -10%, rgba(76,201,240,.18), transparent 55%),
+                  radial-gradient(900px 600px at 120% 0%, rgba(163,230,53,.14), transparent 50%),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+    header{
+      padding: 28px 18px 12px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      position: sticky; top: 0;
+      backdrop-filter: blur(10px);
+      background: rgba(11,15,20,.78);
+      z-index: 50;
+    }
+    .wrap{max-width: var(--max); margin: 0 auto;}
+    .title{display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap;}
+    h1{font-size: 20px; margin: 0; letter-spacing:.02em;}
+    .sub{margin: 6px 0 0; color: var(--muted); font-size: 13px;}
+    .badge-row{display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end}
+    .badge{
+      font-size: 12px; color: var(--muted);
+      padding: 6px 10px; border: 1px solid rgba(255,255,255,.10);
+      border-radius: 999px; background: rgba(255,255,255,.04);
+    }
+    .tabs{margin-top: 16px; display:flex; gap:8px; flex-wrap:wrap;}
+    .tab-btn{
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 999px;
+      cursor:pointer;
+      font-size: 13px;
+      transition: .2s ease;
+      user-select:none;
+    }
+    .tab-btn[aria-selected="true"]{
+      background: linear-gradient(90deg, rgba(76,201,240,.18), rgba(163,230,53,.12));
+      border-color: rgba(76,201,240,.35);
+      box-shadow: 0 0 0 3px rgba(76,201,240,.10);
+    }
+    main{padding: 18px 18px 44px;}
+    .panel{display:none; margin-top: 14px;}
+    .panel.active{display:block;}
+    .grid{display:grid; grid-template-columns: 1.2fr .8fr; gap: 16px;}
+    @media (max-width: 900px){ .grid{grid-template-columns:1fr;} }
+    .card{
+      background: rgba(17,24,38,.78);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow);
+    }
+    h2{font-size:16px; margin:0 0 8px}
+    h3{font-size:14px; margin:16px 0 6px}
+    p{margin: 10px 0}
+    ul{margin: 8px 0 10px 18px; padding:0}
+    li{margin: 4px 0}
+    .note{color: var(--muted); font-size: 13px;}
+    .callout{
+      border-left: 4px solid var(--accent);
+      padding: 10px 12px;
+      background: rgba(76,201,240,.06);
+      border-radius: 10px;
+      margin: 12px 0;
+    }
+    .warn{border-left-color: var(--warn); background: rgba(251,191,36,.08);}
+    .danger{border-left-color: var(--danger); background: rgba(251,113,133,.08);}
+    .kvs{display:grid; grid-template-columns: 150px 1fr; gap: 8px 12px; margin-top: 10px;}
+    .k{color:var(--muted)}
+    .pill{
+      display:inline-block; padding: 2px 8px; border-radius: 999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      color: var(--muted); font-size: 12px; margin-right: 6px;
+      vertical-align: middle;
+    }
+    footer{margin-top: 18px; color: var(--muted); font-size: 12px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.08);}
+
+    /* Quiz */
+    .quiz-topbar{
+      display:flex; gap:10px; flex-wrap:wrap;
+      align-items:center; justify-content:space-between;
+      margin-bottom: 10px;
+    }
+    .select{
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      min-width: 260px;
+      outline: none;
+    }
+    .btn{
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      cursor:pointer;
+    }
+    .btn.primary{
+      background: linear-gradient(90deg, rgba(76,201,240,.22), rgba(163,230,53,.14));
+      border-color: rgba(76,201,240,.35);
+    }
+    .quiz-q{
+      margin: 14px 0;
+      padding: 12px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03);
+      border-radius: 12px;
+    }
+    .q-title{font-weight: 700; margin-bottom: 8px;}
+    .choices{display:grid; gap:8px;}
+    .choice{
+      display:flex; gap:10px; align-items:flex-start;
+      padding: 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.18);
+      cursor:pointer;
+    }
+    .choice:hover{border-color: rgba(76,201,240,.28);}
+    .choice input{margin-top: 3px;}
+    .result{
+      margin-top: 14px;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.22);
+    }
+    .mark-ok{color: var(--accent2); font-weight: 800;}
+    .mark-ng{color: var(--danger); font-weight: 800;}
+    .muted{color: var(--muted)}
+    .small{font-size: 12px; color: var(--muted)}
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="wrap">
+      <div class="title">
+        <div>
+          <h1>ホップ栽培 × ノンアル醸造ノート（草深 / 印西）</h1>
+          <p class="sub">ホップの育て方／苗と雌雄／支柱設計／ビールの種類／エール&ラガーの発酵／合法ライン（1%未満）／発酵させないノンアル</p>
+        </div>
+        <div class="badge-row">
+          <span class="badge">家庭菜園</span>
+          <span class="badge">手入れしやすさ優先</span>
+          <span class="badge">ノンアル中心</span>
+        </div>
+      </div>
+
+      <nav class="tabs" role="tablist" aria-label="カテゴリ">
+        <button class="tab-btn" role="tab" aria-selected="true"  aria-controls="t-home"    id="tab-home">トップ</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="t-hop"     id="tab-hop">ホップ栽培</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="t-trellis" id="tab-trellis">支柱・トレリス</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="t-calendar" id="tab-calendar">月ごと作業</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="t-variety" id="tab-variety">品種と香り</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="t-beer"    id="tab-beer">ビールの種類</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="t-ferment" id="tab-ferment">発酵の違い</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="t-legal"   id="tab-legal">法律メモ</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="t-na"      id="tab-na">ノンアル</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="t-quiz"    id="tab-quiz">クイズ</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="t-faq"     id="tab-faq">FAQ</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+
+      <!-- TOP -->
+      <section class="panel active" id="t-home" role="tabpanel" aria-labelledby="tab-home">
+        <div class="grid">
+          <div class="card">
+            <h2>このサイトでまとめること</h2>
+            <ul>
+              <li>草深（印西）の家庭環境でのホップ栽培（現実的に回るやり方）</li>
+              <li>苗・雌雄・雄株の扱い</li>
+              <li>支柱（7m必須？→家庭の最適解）</li>
+              <li>ビールの種類（味の方向性）</li>
+              <li>エール／ラガーの発酵の違い</li>
+              <li>合法ライン（1%未満）で楽しむノンアルの作り方</li>
+            </ul>
+            <div class="callout warn">
+              <strong>注意：</strong> 日本ではアルコール発酵してビールを造るには免許が必要。ここでは <span class="pill">発酵させない</span> または <span class="pill">1%未満</span> を前提に整理。
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>最短おすすめルート</h2>
+            <ol>
+              <li>品種：まず <strong>Cascade</strong></li>
+              <li>支柱：<strong>高さ3m＋横ワイヤー（または30〜45°）</strong></li>
+              <li>収穫ホップ：苦味より <strong>香り用途（後半投入／ドライホップ）</strong></li>
+              <li>ノンアル：<strong>酵母を入れない</strong>＋炭酸化</li>
+            </ol>
+          </div>
+        </div>
+        <footer>更新メモ：収穫時期／乾燥方法／草深の土質メモなどを追記していく</footer>
+      </section>
+
+      <!-- HOP -->
+      <section class="panel" id="t-hop" role="tabpanel" aria-labelledby="tab-hop">
+        <div class="grid">
+          <div class="card">
+            <h2>ホップ栽培の基本</h2>
+            <h3>土とpH</h3>
+            <ul>
+              <li>目標pH：<strong>6.0〜7.0</strong></li>
+            </ul>
+            <h3>雌株・雄株</h3>
+            <div class="callout"><strong>毬花（まりばな）は雌株のみ。</strong> 家庭でビール用途なら雄株は基本不要。</div>
+          </div>
+          <div class="card">
+            <h2>剪定（やる／やらない）</h2>
+            <ul>
+              <li>やる：選芽（2〜3本）、下葉整理</li>
+              <li>原則やらない：主つる先端カット</li>
+            </ul>
+            <div class="callout warn">高さ制限は「切る」より「流す」。</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TRELLIS -->
+      <section class="panel" id="t-trellis" role="tabpanel" aria-labelledby="tab-trellis">
+        <div class="grid">
+          <div class="card">
+            <h2>支柱・トレリス</h2>
+            <ul>
+              <li>家庭は<strong>3m＋横</strong>または<strong>斜め</strong>が現実解</li>
+              <li>3m到達後は横へ誘引（Uターン/S字OK）</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h2>メモ</h2>
+            <p class="note">収穫しやすさ＝継続しやすさ。高所作業は避ける設計が無難。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CALENDAR -->
+      <section class="panel" id="t-calendar" role="tabpanel" aria-labelledby="tab-calendar">
+        <div class="card">
+          <h2>月ごと作業（ひな形）</h2>
+          <ul>
+            <li>春：選芽→誘引→梅雨前の下葉整理</li>
+            <li>夏：水・風通し・害虫チェック／毬花肥大</li>
+            <li>秋：収穫→乾燥保存→刈り戻し</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- VARIETY -->
+      <section class="panel" id="t-variety" role="tabpanel" aria-labelledby="tab-variety">
+        <div class="grid">
+          <div class="card">
+            <h2>品種と香り</h2>
+            <ul>
+              <li>柑橘・万能：Cascade / Centennial</li>
+              <li>ハーブ：Saaz / Hallertau</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h2>雌株の入手</h2>
+            <ul>
+              <li>ビール用途は<strong>雌株保証</strong>の苗・根茎を選ぶ</li>
+              <li>種は雄が混ざりやすい</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- BEER -->
+      <section class="panel" id="t-beer" role="tabpanel" aria-labelledby="tab-beer">
+        <div class="grid">
+          <div class="card">
+            <h2>ビールの種類</h2>
+            <ul>
+              <li>IPA：ホップ主役</li>
+              <li>Pale Ale：バランス</li>
+              <li>Pilsner/Helles：ラガー（キレ）</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h2>ラガーとは</h2>
+            <div class="kvs">
+              <div class="k">温度</div><div>8〜12℃</div>
+              <div class="k">味</div><div>クリーン／キレ</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FERMENT -->
+      <section class="panel" id="t-ferment" role="tabpanel" aria-labelledby="tab-ferment">
+        <div class="grid">
+          <div class="card">
+            <h2>発酵の違い</h2>
+            <ul>
+              <li>エール（上面発酵）：18〜24℃、香り出やすい</li>
+              <li>ラガー（下面発酵）：8〜12℃、温度管理が厳しい</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h2>家庭目線</h2>
+            <div class="callout">家庭で“発酵の個性”を学ぶならエールの理屈が理解しやすい。</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- LEGAL -->
+      <section class="panel" id="t-legal" role="tabpanel" aria-labelledby="tab-legal">
+        <div class="card">
+          <h2>法律メモ（ざっくり）</h2>
+          <div class="callout danger">アルコール発酵でビールを造る行為は免許が必要（個人消費でも同様）。</div>
+          <ul>
+            <li>梅酒がOK：市販の酒に浸すだけ（新たな発酵なし）</li>
+            <li>製造免許の要件例：年6,000Lなど</li>
+            <li>6,000L ≒ 350ml缶 約17,140本</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- NA -->
+      <section class="panel" id="t-na" role="tabpanel" aria-labelledby="tab-na">
+        <div class="grid">
+          <div class="card">
+            <h2>発酵させないノンアル（おすすめ）</h2>
+            <ol>
+              <li>糖化：75〜78℃寄り</li>
+              <li>煮沸：衛生＋苦味（控えめ）</li>
+              <li>冷却：早く</li>
+              <li>ドライホップ：香り付け</li>
+              <li>炭酸化：ソーダストリーム等</li>
+            </ol>
+          </div>
+          <div class="card">
+            <h2>最低限の機材</h2>
+            <ul>
+              <li>鍋、温度計、メッシュバッグ、消毒、炭酸化</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- QUIZ -->
+      <section class="panel" id="t-quiz" role="tabpanel" aria-labelledby="tab-quiz">
+        <div class="card">
+          <div class="quiz-topbar">
+            <div>
+              <h2 style="margin:0 0 6px;">カテゴリ別クイズ（各5問・4択）</h2>
+              <div class="small">カテゴリを選んで回答 → 「送信」で採点（丸×＋点数）。</div>
+            </div>
+
+            <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+              <select class="select" id="quizCategory" aria-label="クイズカテゴリ">
+                <option value="hop">ホップ栽培</option>
+                <option value="trellis">支柱・トレリス</option>
+                <option value="variety">品種と香り</option>
+                <option value="beer">ビールの種類</option>
+                <option value="ferment">発酵の違い</option>
+                <option value="legal">法律メモ</option>
+                <option value="na">ノンアル</option>
+              </select>
+              <button class="btn" id="btnReset">リセット</button>
+              <button class="btn primary" id="btnSubmit">送信して採点</button>
+            </div>
+          </div>
+
+          <div id="quizMount"></div>
+          <div id="quizResult" class="result" style="display:none;"></div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section class="panel" id="t-faq" role="tabpanel" aria-labelledby="tab-faq">
+        <div class="card">
+          <h2>FAQ</h2>
+          <h3>Q. 「毬花」の読み方は？</h3>
+          <p>A. まりばな。</p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script>
+    // Tabs
+    const tabs = Array.from(document.querySelectorAll('.tab-btn'));
+    const panels = Array.from(document.querySelectorAll('.panel'));
+    function activateTab(tabId, pushHash=true){
+      const tab = document.getElementById(tabId);
+      if(!tab) return;
+      tabs.forEach(t => t.setAttribute('aria-selected', String(t === tab)));
+      const target = tab.getAttribute('aria-controls');
+      panels.forEach(p => p.classList.toggle('active', p.id === target));
+      if(pushHash){
+        const hash = target.replace('t-','');
+        history.replaceState(null, '', '#' + hash);
+      }
+    }
+    tabs.forEach(t => {
+      t.addEventListener('click', () => activateTab(t.id, true));
+      t.addEventListener('keydown', (e) => {
+        const idx = tabs.indexOf(t);
+        if(e.key === 'ArrowRight'){
+          e.preventDefault();
+          const next = tabs[(idx+1) % tabs.length];
+          next.focus(); activateTab(next.id, true);
+        }
+        if(e.key === 'ArrowLeft'){
+          e.preventDefault();
+          const prev = tabs[(idx-1 + tabs.length) % tabs.length];
+          prev.focus(); activateTab(prev.id, true);
+        }
+      });
+    });
+    function loadFromHash(){
+      const h = (location.hash || '').replace('#','').trim();
+      if(!h) return;
+      const panelId = 't-' + h;
+      const tab = tabs.find(t => t.getAttribute('aria-controls') === panelId);
+      if(tab) activateTab(tab.id, false);
+    }
+    window.addEventListener('hashchange', loadFromHash);
+    loadFromHash();
+
+    // QUIZ DATA (each category: 5 questions, 4 choices)
+    const QUIZ = {
+      hop: {
+        label: "ホップ栽培",
+        questions: [
+          { q: "ビールに使うホップの部分「毬花」の読み方は？",
+            choices: ["まりばな", "きゅうか", "ほしか", "きっか"], answer: 0 },
+          { q: "ビール用途のホップで基本的に必要なのはどっち？",
+            choices: ["雄株", "雌株", "どちらでも同じ", "種から育てた株だけ"], answer: 1 },
+          { q: "ホップの土のpH目標として適切なのは？",
+            choices: ["3.0〜4.0", "4.0〜5.0", "6.0〜7.0", "8.5〜9.5"], answer: 2 },
+          { q: "剪定で原則おすすめできないのは？",
+            choices: ["選芽（2〜3本に絞る）", "下葉整理（風通し）", "主つる先端カットで止める", "混みすぎ軽整理"], answer: 2 },
+          { q: "草深のような高温多湿で特に優先したいのは？",
+            choices: ["日陰を作る", "風通しの確保", "水を葉に毎日かける", "追肥を多めにする"], answer: 1 },
+        ]
+      },
+      trellis: {
+        label: "支柱・トレリス",
+        questions: [
+          { q: "家庭栽培で7mが必須と言い切れない理由として正しいのは？",
+            choices: ["3mでは実が全くならないから", "7mは商業畑の最大収量設計だから", "日本では3m以上育たないから", "斜め誘引は禁止だから"], answer: 1 },
+          { q: "高さ制限（3mなど）のときの推奨対応は？",
+            choices: ["主つるを切って止める", "横ワイヤーへ誘引して流す", "地面に寝かせる", "毎日巻き戻す"], answer: 1 },
+          { q: "斜め30〜45°誘引について正しいのは？",
+            choices: ["育たないのでNG", "家庭ではむしろ現実的", "法律で禁止", "香りが必ず落ちる"], answer: 1 },
+          { q: "7m垂直のデメリットとして最も大きいのは？",
+            choices: ["実が小さくなる", "高所作業で収穫・手入れが大変", "風通しが悪い", "日当たりが悪い"], answer: 1 },
+          { q: "トレリス設計で特に重要なポイントは？",
+            choices: ["アンカー固定を強くする", "毎日水を葉にかける", "夜間に散水する", "肥料を多くする"], answer: 0 },
+        ]
+      },
+      variety: {
+        label: "品種と香り",
+        questions: [
+          { q: "最初の1株として育てやすく、汎用性が高いと言った品種は？",
+            choices: ["Cascade", "Saaz", "Magnum", "Galaxy"], answer: 0 },
+          { q: "ハーブ系で上品な方向になりやすいホップは？",
+            choices: ["Saaz / Hallertau", "Citra / Mosaic", "Magnum / Warrior", "Simcoe / Amarillo"], answer: 0 },
+          { q: "家庭の自家ホップで成功率が高い使い方は？",
+            choices: ["苦味付けの最初投入だけ", "香り用途（後半投入・ドライ）", "煮沸せずそのまま入れる", "必ず種入りにする"], answer: 1 },
+          { q: "種から育てる場合に起きやすい問題は？",
+            choices: ["必ず雌だけになる", "雄が混ざる可能性が高い", "毬花が巨大化する", "病気がゼロになる"], answer: 1 },
+          { q: "Magnumの役割として一般的なのは？",
+            choices: ["強いトロピカル香", "ハーブ香の中心", "苦味の土台", "甘みを増やす"], answer: 2 },
+        ]
+      },
+      beer: {
+        label: "ビールの種類",
+        questions: [
+          { q: "ホップ主役で苦味と香りが強いスタイルは？",
+            choices: ["IPA", "Stout", "Helles", "Weissbier"], answer: 0 },
+          { q: "バランス型で自家ホップの入口にしやすいのは？",
+            choices: ["Pale Ale", "Imperial Stout", "Doppelbock", "Barleywine"], answer: 0 },
+          { q: "「ラガー」の特徴として正しいのは？",
+            choices: ["高温で短期発酵", "低温でクリーンな味になりやすい", "必ず酸っぱい", "必ず黒い"], answer: 1 },
+          { q: "Pilsnerはどのカテゴリに入る？",
+            choices: ["エール", "ラガー", "蒸留酒", "ワイン"], answer: 1 },
+          { q: "Weissbierの特徴として近いのは？",
+            choices: ["ロースト香", "バナナ/クローブ（酵母由来）", "強い松脂香", "強烈な苦味だけ"], answer: 1 },
+        ]
+      },
+      ferment: {
+        label: "発酵の違い",
+        questions: [
+          { q: "エール（上面発酵）の温度帯として近いのは？",
+            choices: ["0〜4℃", "8〜12℃", "18〜24℃", "35〜40℃"], answer: 2 },
+          { q: "ラガー（下面発酵）の温度帯として近いのは？",
+            choices: ["8〜12℃", "18〜24℃", "30〜35℃", "常温なら何でも"], answer: 0 },
+          { q: "家庭でラガーが難しくなりがちな理由は？",
+            choices: ["ホップが手に入らない", "低温管理がシビア", "炭酸が入らない", "色が付く"], answer: 1 },
+          { q: "「キレ」が出やすいのはどちら？",
+            choices: ["ラガー", "エール", "どちらも同じ", "ホップウォーター"], answer: 0 },
+          { q: "自然発酵について正しいのは？",
+            choices: ["再現性が低く難度が高い", "必ず成功する", "法律で常にOK", "必ずノンアルになる"], answer: 0 },
+        ]
+      },
+      legal: {
+        label: "法律メモ",
+        questions: [
+          { q: "日本でビールを「アルコール発酵」させて造る場合に必要なのは？",
+            choices: ["特になし", "酒類製造免許", "運転免許", "食品衛生責任者だけ"], answer: 1 },
+          { q: "梅酒が家庭でOKになりやすい理由として近いのは？",
+            choices: ["必ず無税だから", "市販の酒に浸すだけで新たな発酵をしないから", "酵母を大量に入れるから", "度数が必ず0%だから"], answer: 1 },
+          { q: "6,000Lを350ml缶にすると概ね何本？",
+            choices: ["約1,714本", "約7,140本", "約17,140本", "約71,400本"], answer: 2 },
+          { q: "自家製で合法に楽しみやすいラインとして話したのは？",
+            choices: ["アルコール10%未満", "アルコール1%未満", "アルコール5%未満", "アルコール0.5%以上"], answer: 1 },
+          { q: "「販売しない」「自分だけで飲む」なら免許不要？",
+            choices: ["はい", "いいえ（原則不要にならない）", "季節による", "都道府県で違う"], answer: 1 },
+        ]
+      },
+      na: {
+        label: "ノンアル",
+        questions: [
+          { q: "発酵させない最も安全な方法は？",
+            choices: ["酵母を入れない", "酵母を多く入れる", "常温放置", "砂糖を増やす"], answer: 0 },
+          { q: "発酵しにくい糖化設計として近い温度は？",
+            choices: ["45〜50℃", "60〜65℃", "75〜78℃", "95〜100℃"], answer: 2 },
+          { q: "自家ホップを活かしやすいのは？",
+            choices: ["香り用途（ドライホップ）", "苦味の最初投入だけ", "砂糖で甘くする", "発酵を長くする"], answer: 0 },
+          { q: "ノンアルの“ビール感”に大きく効く要素は？",
+            choices: ["炭酸", "食塩", "砂糖だけ", "色素"], answer: 0 },
+          { q: "ノンアルで苦味を控えめ推奨した理由は？",
+            choices: ["苦味は法律で禁止", "アルコールがないと苦味が立ちやすい", "ホップが溶けない", "炭酸が抜ける"], answer: 1 },
+        ]
+      },
+    };
+
+    const quizCategory = document.getElementById('quizCategory');
+    const quizMount = document.getElementById('quizMount');
+    const quizResult = document.getElementById('quizResult');
+    const btnSubmit = document.getElementById('btnSubmit');
+    const btnReset = document.getElementById('btnReset');
+
+    function esc(s){ return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+
+    function renderQuiz(categoryKey){
+      const cat = QUIZ[categoryKey];
+      quizResult.style.display = 'none';
+      quizResult.innerHTML = '';
+      quizMount.innerHTML = '';
+
+      const header = document.createElement('div');
+      header.className = 'callout';
+      header.innerHTML = `<strong>${esc(cat.label)}：5問クイズ</strong><div class="small muted">全問回答して「送信して採点」。</div>`;
+      quizMount.appendChild(header);
+
+      cat.questions.forEach((item, qi) => {
+        const qWrap = document.createElement('div');
+        qWrap.className = 'quiz-q';
+        qWrap.innerHTML = `
+          <div class="q-title">Q${qi+1}. ${esc(item.q)}</div>
+          <div class="choices">
+            ${item.choices.map((c, ci) => `
+              <label class="choice">
+                <input type="radio" name="q${qi}" value="${ci}" />
+                <span>${esc(c)}</span>
+              </label>
+            `).join('')}
+          </div>
+          <div class="small muted" id="fb-${qi}" style="margin-top:8px; display:none;"></div>
+        `;
+        quizMount.appendChild(qWrap);
+      });
+    }
+
+    function gradeQuiz(){
+      const key = quizCategory.value;
+      const cat = QUIZ[key];
+      let score = 0;
+      const details = [];
+
+      cat.questions.forEach((item, qi) => {
+        const picked = document.querySelector(`input[name="q${qi}"]:checked`);
+        const fb = document.getElementById(`fb-${qi}`);
+
+        if(!picked){
+          fb.style.display = 'block';
+          fb.innerHTML = `<span class="mark-ng">×</span> 未回答（正解：${esc(item.choices[item.answer])}）`;
+          details.push({ok:false, msg:`Q${qi+1}: 未回答`});
+          return;
+        }
+
+        const val = Number(picked.value);
+        const ok = val === item.answer;
+        if(ok) score += 1;
+
+        fb.style.display = 'block';
+        fb.innerHTML = ok
+          ? `<span class="mark-ok">○</span> 正解`
+          : `<span class="mark-ng">×</span> 不正解（正解：${esc(item.choices[item.answer])}）`;
+
+        details.push({ok, msg:`Q${qi+1}: ${ok ? '○' : '×'}`});
+      });
+
+      quizResult.style.display = 'block';
+      const percent = Math.round((score / cat.questions.length) * 100);
+      quizResult.innerHTML = `
+        <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+          <div><strong>採点結果：</strong>${esc(cat.label)}（${cat.questions.length}問）</div>
+          <div><strong>${score} / ${cat.questions.length} 点</strong>（${percent}%）</div>
+        </div>
+        <div class="small muted" style="margin-top:8px;">各設問の丸×は問題の下に表示。</div>
+      `;
+      quizResult.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+
+    function resetQuiz(){
+      // clear selections & feedback
+      quizResult.style.display = 'none';
+      quizResult.innerHTML = '';
+      const inputs = quizMount.querySelectorAll('input[type="radio"]');
+      inputs.forEach(i => i.checked = false);
+      const fbs = quizMount.querySelectorAll('[id^="fb-"]');
+      fbs.forEach(f => { f.style.display='none'; f.innerHTML=''; });
+    }
+
+    quizCategory.addEventListener('change', () => renderQuiz(quizCategory.value));
+    btnSubmit.addEventListener('click', gradeQuiz);
+    btnReset.addEventListener('click', resetQuiz);
+
+    // Initial render
+    renderQuiz(quizCategory.value);
+  </script>
+</body>
+</html>
